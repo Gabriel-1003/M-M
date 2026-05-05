@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotoRank - As Melhores Motos Avaliadas</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff4d00;
+            --primary-dark: #cc3d00;
+            --bg-dark: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-card-hover: #1a1a25;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --border: #2a2a3a;
+            --gold: #ffd700;
+            --green: #00e676;
+            --red: #ff1744;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 2rem;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-decoration: none;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-btn {
+            background: var(--primary);
+            color: white !important;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(255, 77, 0, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(255, 77, 0, 0.05) 0%, transparent 50%);
+            animation: heroGlow 10s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroGlow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-5%, 3%); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(255, 77, 0, 0.15);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 77, 0, 0.3);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--primary), #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 77, 0, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* FILTERS */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* MOTO CARDS */
+        .motos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .moto-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.4s;
+            cursor: pointer;
+        }
+
+        .moto-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 77, 0, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .moto-card.hidden {
+            display: none;
+        }
+
+        .moto-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .moto-image::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(transparent, var(--bg-card));
+        }
+
+        .moto-rank {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.1rem;
+            z-index: 2;
+        }
+
+        .moto-rank.gold { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; }
+        .moto-rank.silver { background: linear-gradient(135deg, #c0c0c0, #a0a0a0); color: #000; }
+        .moto-rank.bronze { background: linear-gradient(135deg, #cd7f32, #b8690e); }
+
+        .moto-category-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+
+        .moto-info {
+            padding: 1.5rem;
+        }
+
+        .moto-brand {
+            color: var(--primary);
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .moto-name {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 0.3rem 0 0.8rem;
+            letter-spacing: -0.5px;
+        }
+
+        .moto-specs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .spec {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .spec-icon {
+            font-size: 1rem;
+        }
+
+        .spec-text {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .spec-text strong {
+            color: var(--text-primary);
+            display: block;
+            font-size: 0.85rem;
+        }
+
+        .moto-rating-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            margin-top: 1rem;
+        }
+
+        .stars {
+            display: flex;
+            gap: 2px;
+        }
+
+        .star {
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .star:hover {
+            transform: scale(1.3);
+        }
+
+        .star.filled { color: var(--gold); }
+        .star.empty { color: #333; }
+
+        .rating-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .rating-count {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .moto-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--green);
+        }
+
+        .moto-price small {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* COMPARISON SECTION */
+        .compare-section {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 3rem;
+            border: 1px solid var(--border);
+            margin-top: 2rem;
+        }
+
+        .compare-selectors {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .compare-select {
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            min-width: 250px;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23ff4d00' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        .compare-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .compare-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .compare-table th, .compare-table td {
+            padding: 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .compare-table th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .compare-table td {
+            font-weight: 500;
+        }
+
+        .compare-table .winner {
+            color: var(--green);
+            font-weight: 700;
+        }
+
+        .compare-vs {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--primary);
+        }
+
+        /* REVIEW MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 550px;
+            width: 100%;
+            border: 1px solid var(--border);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--primary);
+        }
+
+        .modal h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal .moto-brand {
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .star-rating-input {
+            display: flex;
+            gap: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .star-rating-input .star {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .star-rating-input .star:hover {
+            transform: scale(1.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* TOP RANKING */
+        .ranking-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .ranking-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .ranking-item:hover {
+            border-color: rgba(255, 77, 0, 0.3);
+            transform: translateX(5px);
+        }
+
+        .ranking-position {
+            font-size: 2rem;
+            font-weight: 900;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .ranking-position.first { color: var(--gold); }
+        .ranking-position.second { color: #c0c0c0; }
+        .ranking-position.third { color: #cd7f32; }
+
+        .ranking-emoji {
+            font-size: 3rem;
+        }
+
+        .ranking-info {
+            flex: 1;
+        }
+
+        .ranking-info h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .ranking-info p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .ranking-score {
+            text-align: right;
+        }
+
+        .ranking-score .score {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+
+        .ranking-score .label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .ranking-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .ranking-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--primary), #ff8c00);
+            transition: width 1s ease;
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 4rem 2rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .footer-brand .logo {
+            font-size: 1.5rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .footer-brand p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-col h4 {
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .footer-col a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        /* TOAST */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--green);
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 700;
+            z-index: 3000;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* SCROLL ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .motos-grid { grid-template-columns: 1fr; }
+            .hero-stats { gap: 1.5rem; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+            .compare-selectors { flex-direction: column; align-items: center; }
+            .ranking-item { flex-wrap: wrap; }
+            .compare-table { font-size: 0.85rem; }
+            .modal { padding: 2rem; margin: 1rem; }
+        }
+
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Moto<span>Rank</span></a>
+            <ul class="nav-links">
+                <li><a href="#motos">Motos</a></li>
+                <li><a href="#ranking">Ranking</a></li>
+                <li><a href="#comparar">Comparar</a></li>
+                <li><a href="#avaliar" class="nav-btn">Avaliar Moto</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🏆 #1 Plataforma de Avaliação de Motos</div>
+            <h1>Descubra as <span class="highlight">Melhores Motos</span> do Mercado</h1>
+            <p>Avaliações reais de motociclistas. Compare especificações, preços e opiniões para encontrar a moto perfeita para você.</p>
+            <div class="hero-buttons">
+                <a href="#motos" class="btn btn-primary">Ver Motos Avaliadas</a>
+                <a href="#comparar" class="btn btn-outline">Comparar Motos</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <h3>2.847</h3>
+                    <p>Avaliações</p>
+                </div>
+                <div class="stat">
+                    <h3>156</h3>
+                    <p>Modelos</p>
+                </div>
+                <div class="stat">
+                    <h3>12.5k</h3>
+                    <p>Usuários</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MOTOS -->
+    <section id="motos">
+        <div class="section-header fade-in">
+            <h2>🏍️ Motos em Destaque</h2>
+            <p>Explore as motos mais bem avaliadas pelos nossos usuários</p>
+        </div>
+
+        <div class="filters fade-in">
+            <button class="filter-btn active" data-filter="all">Todas</button>
+            <button class="filter-btn" data-filter="esportiva">Esportiva</button>
+            <button class="filter-btn" data-filter="naked">Naked</button>
+            <button class="filter-btn" data-filter="trail">Trail</button>
+            <button class="filter-btn" data-filter="custom">Custom</button>
+            <button class="filter-btn" data-filter="scooter">Scooter</button>
+        </div>
+
+        <div class="motos-grid" id="motosGrid">
+            <!-- Cards serão gerados via JS -->
+        </div>
+    </section>
+
+    <!-- RANKING -->
+    <section id="ranking">
+        <div class="section-header fade-in">
+            <h2>🏆 Top Ranking Geral</h2>
+            <p>As motos com as melhores avaliações da comunidade</p>
+        </div>
+
+        <div class="ranking-list" id="rankingList">
+            <!-- Gerado via JS -->
+        </div>
+    </section>
+
+    <!-- COMPARAR -->
+    <section id="comparar">
+        <div class="section-header fade-in">
+            <h2>⚔️ Compare Motos</h2>
+            <p>Selecione duas motos e veja lado a lado</p>
+        </div>
+
+        <div class="compare-section fade-in">
+            <div class="compare-selectors">
+                <select class="compare-select" id="compare1">
+                    <option value="">Selecione a Moto 1</option>
+                </select>
+                <span class="compare-vs">VS</span>
+                <select class="compare-select" id="compare2">
+                    <option value="">Selecione a Moto 2</option>
+                </select>
+            </div>
+            <button class="btn btn-primary" onclick="compareMotos()" style="display:block;margin:0 auto 2rem;">Comparar Agora</button>
+            <div id="compareResult"></div>
+        </div>
+    </section>
+
+    <!-- AVALIAR -->
+    <section id="avaliar">
+        <div class="section-header fade-in">
+            <h2>✍️ Avalie sua Moto</h2>
+            <p>Compartilhe sua experiência e ajude outros motociclistas</p>
+        </div>
+
+        <div class="compare-section fade-in" style="max-width: 600px; margin: 0 auto;">
+            <form id="reviewForm" onsubmit="submitReview(event)">
+                <div class="form-group">
+                    <label>Selecione a Moto</label>
+                    <select id="reviewMoto" required>
+                        <option value="">Escolha uma moto...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Seu Nome</label>
+                    <input type="text" id="reviewName" placeholder="Seu nome" required>
+                </div>
+                <div class="form-group">
+                    <label>Sua Avaliação</label>
+                    <div class="star-rating-input" id="starRating">
+                        <span class="star empty" data-value="1">⭐</span>
+                        <span class="star empty" data-value="2">⭐</span>
+                        <span class="star empty" data-value="3">⭐</span>
+                        <span class="star empty" data-value="4">⭐</span>
+                        <span class="star empty" data-value="5">⭐</span>
+                    </div>
+                    <input type="hidden" id="ratingValue" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Seu Comentário</label>
+                    <textarea id="reviewComment" placeholder="Conte sua experiência com a moto..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Enviar Avaliação ⭐</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="logo">Moto<span>Rank</span></a>
+                <p>A maior plataforma de avaliação de motos do Brasil. Encontre a moto ideal com avaliações reais da comunidade.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navegação</h4>
+                <a href="#motos">Motos</a>
+                <a href="#ranking">Ranking</a>
+                <a href="#comparar">Comparar</a>
+                <a href="#avaliar">Avaliar</a>
+            </div>
+            <div class="footer-col">
+                <h4>Categorias</h4>
+                <a href="#">Esportivas</a>
+                <a href="#">Naked</a>
+                <a href="#">Trail</a>
+                <a href="#">Custom</a>
+                <a href="#">Scooter</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contato</h4>
+                <a href="#">contoto@motorank.com.br</a>
+                <a href="#">Instagram</a>
+                <a href="#">YouTube</a>
+                <a href="#">Telegram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 MotoRank. Todos os direitos reservados. Feito com ❤️ para motociclistas.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="motoModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <span class="moto-brand" id="modalBrand"></span>
+            <h2 id="modalName"></h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;" id="modalDesc"></p>
+            <div id="modalSpecs"></div>
+            <div style="margin-top: 1.5rem;">
+                <h4 style="margin-bottom: 0.5rem;">Avaliações Recentes</h4>
+                <div id="modalReviews"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">✅ Avaliação enviada com sucesso!</div>
+
+    <script>
+        // ==================== DADOS DAS MOTOS ====================
+        const motos = [
+            {
+                id: 1, name: "YZF-R3", brand: "Yamaha", category: "esportiva",
+                emoji: "🏍️", price: "R$ 29.990",
+                engine: "321cc", power: "42 cv", weight: "170 kg", torque: "29.6 Nm",
+                rating: 4.8, reviews: 342,
+                desc: "A Yamaha YZF-R3 é a esportiva de entrada perfeita. Com motor bicilíndrico de 321cc, oferece performance excepcional com conforto para o dia a dia.",
+                userReviews: [
+                    { name: "Carlos M.", rating: 5, text: "Moto incrível! leve, ágil e com visual agressivo." },
+                    { name: "Ana P.", rating: 4, text: "Ótima para iniciantes, muito econômica." }
+                ]
+            },
+            {
+                id: 2, name: "CB 500F", brand: "Honda", category: "naked",
+                emoji: "🔥", price: "R$ 37.900",
+                engine: "471cc", power: "50 cv", weight: "189 kg", torque: "43 Nm",
+                rating: 4.7, reviews: 489,
+                desc: "A Honda CB 500F é a naked versátil por excelência. Motor bicilíndrico confiável, ótimo para cidade e estrada.",
+                userReviews: [
+                    { name: "Roberto S.", rating: 5, text: "A moto mais confiável que já tive. Honda é Honda!" },
+                    { name: "Lucas F.", rating: 4, text: "Excelente custo-benefício, muito versátil." }
+                ]
+            },
+            {
+                id: 3, name: "CBR 650R", brand: "Honda", category: "esportiva",
+                emoji: "⚡", price: "R$ 48.900",
+                engine: "649cc", power: "65 cv", weight: "202 kg", torque: "63 Nm",
+                rating: 4.9, reviews: 567,
+                desc: "A CBR 650R combina design inspirado na CBR1000RR com um motor de 4 cilindros suave e potente. A esportiva média definitiva.",
+                userReviews: [
+                    { name: "Pedro H.", rating: 5, text: "O som do motor 4 cilindros é maravilhoso!" },
+                    { name: "Juliana R.", rating: 5, text: "A melhor moto que já pilotei. Perfeita!" }
+                ]
+            },
+            {
+                id: 4, name: "Teneré 700", brand: "Yamaha", category: "trail",
+                emoji: "🏔️", price: "R$ 54.990",
+                engine: "689cc", power: "73 cv", weight: "205 kg", torque: "68 Nm",
+                rating: 4.9, reviews: 423,
+                desc: "A Teneré 700 é a trail adventure definitiva. Motor CP2 crossplane, suspensão de longo curso e capacidade off-road impressionante.",
+                userReviews: [
+                    { name: "Marcos T.", rating: 5, text: "Aventureira de verdade! Levei até a Chapada e foi perfeita." },
+                    { name: "Fernanda L.", rating: 5, text: "Moto para a vida toda. Robusta e confiável." }
+                ]
+            },
+            {
+                id: 5, name: "MT-07", brand: "Yamaha", category: "naked",
+                emoji: "💀", price: "R$ 42.990",
+                engine: "689cc", power: "73 cv", weight: "184 kg", torque: "68 Nm",
+                rating: 4.8, reviews: 612,
+                desc: "A MT-07 é a naked mais popular do Brasil. Motor CP2 com torque brutal, chassi leve e design agressivo.",
+                userReviews: [
+                    { name: "Diego A.", rating: 5, text: "Torque absurdo! A moto mais divertida que já andei." },
+                    { name: "Camila V.", rating: 4, text: "Muito divertida, mas o banco poderia ser mais confortável." }
+                ]
+            },
+            {
+                id: 6, name: "Ninja 650", brand: "Kawasaki", category: "esportiva",
+                emoji: "🐉", price: "R$ 46.990",
+                engine: "649cc", power: "68 cv", weight: "193 kg", torque: "64 Nm",
+                rating: 4.6, reviews: 378,
+                desc: "A Kawasaki Ninja 650 oferece o equilíbrio perfeito entre performance esportiva e conforto para o uso diário.",
+                userReviews: [
+                    { name: "Thiago B.", rating: 5, text: "Kawasaki com qualidade impecável. Muito estável." },
+                    { name: "Rafaela M.", rating: 4, text: "Linda e potente. Recomendo!" }
+                ]
+            },
+            {
+                id: 7, name: "XRE 300", brand: "Honda", category: "trail",
+                emoji: "🌿", price: "R$ 24.990",
+                engine: "291cc", power: "26 cv", weight: "145 kg", torque: "27.5 Nm",
+                rating: 4.5, reviews: 891,
+                desc: "A XRE 300 é a trail mais vendida do Brasil. Versátil, econômica e perfeita para as estradas brasileiras.",
+                userReviews: [
+                    { name: "João P.", rating: 5, text: "A rainha das estradas de terra! Não quebra nunca." },
+                    { name: "Maria S.", rating: 4, text: "Boa moto, mas vibra um pouco em alta velocidade." }
+                ]
+            },
+            {
+                id: 8, name: "Vulcan S", brand: "Kawasaki", category: "custom",
+                emoji: "🤘", price: "R$ 44.990",
+                engine: "649cc", power: "61 cv", weight: "228 kg", torque: "63 Nm",
+                rating: 4.6, reviews: 234,
+                desc: "A Vulcan S é a custom moderna com motor de 4 tempos. Ergonomia ergo-fit ajustável e estilo inconfundível.",
+                userReviews: [
+                    { name: "Alexandre C.", rating: 5, text: "Estilo e conforto para viajar. Perfeita!" },
+                    { name: "Patrícia N.", rating: 4, text: "Muito confortável, mas pesada para manobrar." }
+                ]
+            },
+            {
+                id: 9, name: "PCX 160", brand: "Honda", category: "scooter",
+                emoji: "🛵", price: "R$ 16.990",
+                engine: "156cc", power: "16 cv", weight: "131 kg", torque: "15 Nm",
+                rating: 4.4, reviews: 756,
+                desc: "A PCX 160 é a scooter premium da Honda. Conforto, tecnologia e economia para a mobilidade urbana.",
+                userReviews: [
+                    { name: "Bruno L.", rating: 5, text: "Melhor scooter do mercado! Super econômica." },
+                    { name: "Letícia K.", rating: 4, text: "Ótima para o dia a dia. Muito prática." }
+                ]
+            },
+            {
+                id: 10, name: "Duke 390", brand: "KTM", category: "naked",
+                emoji: "🟠", price: "R$ 34.990",
+                engine: "373cc", power: "44 cv", weight: "167 kg", torque: "37 Nm",
+                rating: 4.7, reviews: 345,
+                desc: "A KTM 390 Duke é a naked mais ágil da categoria. Motor monocilíndrico explosivo e chassi trellis de precisão.",
+                userReviews: [
+                    { name: "Gustavo R.", rating: 5, text: "A moto mais ágil que já andei! Vira um kart." },
+                    { name: "Isabela F.", rating: 4, text: "Muito esportiva, mas o motor esquenta bastante." }
+                ]
+            },
+            {
+                id: 11, name: "CB 1000R", brand: "Honda", category: "naked",
+                emoji: "👑", price: "R$ 74.900",
+                engine: "998cc", power: "145 cv", weight: "213 kg", torque: "104 Nm",
+                rating: 4.9, reviews: 198,
+                desc: "A CB 1000R é a super naked da Honda. Motor da CBR1000RR em um pacote naked com eletrônica avançada.",
+                userReviews: [
+                    { name: "Ricardo M.", rating: 5, text: "Uma obra-prima da engenharia. Potência brutal!" },
+                    { name: "Amanda T.", rating: 5, text: "A melhor naked que existe. Ponto." }
+                ]
+            },
+            {
+                id: 12, name: "V-Strom 650", brand: "Suzuki", category: "trail",
+                emoji: "🗺️", price: "R$ 49.990",
+                engine: "645cc", power: "71 cv", weight: "216 kg", torque: "62 Nm",
+                rating: 4.6, reviews: 287,
+                desc: "A Suzuki V-Strom 650 é a adventure mais confiável do mundo. Motor V-Twin suave e capacidade para qualquer aventura.",
+                userReviews: [
+                    { name: "Eduardo S.", rating: 5, text: "Viajei 15.000km sem nenhum problema. Indestrutível!" },
+                    { name: "Carolina B.", rating: 4, text: "Confortável para viagens longas. Muito boa!" }
+                ]
+            }
+        ];
+
+        // ==================== RENDERIZAR CARDS ====================
+        function renderMotos(filter = 'all') {
+            const grid = document.getElementById('motosGrid');
+            grid.innerHTML = '';
+
+            const sortedMotos = [...motos].sort((a, b) => b.rating - a.rating);
+
+            sortedMotos.forEach((moto, index) => {
+                if (filter !== 'all' && moto.category !== filter) return;
+
+                const rankClass = index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : '';
+
+                const card = document.createElement('div');
+                card.className = 'moto-card fade-in';
+                card.dataset.category = moto.category;
+                card.onclick = () => openModal(moto);
+
+                card.innerHTML = `
+                    <div class="moto-image">
+                        <div class="moto-rank ${rankClass}">${index + 1}</div>
+                        <div class="moto-category-tag">${moto.category.toUpperCase()}</div>
+                        <span style="font-size:5rem; z-index:1;">${moto.emoji}</span>
+                    </div>
+                    <div class="moto-info">
+                        <span class="moto-brand">${moto.brand}</span>
+                        <h3 class="moto-name">${moto.name}</h3>
+                        <div class="moto-specs">
+                            <div class="spec">
+                                <span class="spec-icon">⚙️</span>
+                                <div class="spec-text"><strong>${moto.engine}</strong>Motor</div>
+                            </div>
+                            <div class="spec">
+                                <span class="spec-icon">💨</span>
+                                <div class="spec-text"><strong>${moto.power}</strong>Potência</div>
+                            </div>
+                            <div class="spec">
+                                <span class="spec-icon">⚖️</span>
+                                <div class="spec-text"><strong>${moto.weight}</strong>Peso</div>
+                            </div>
+                            <div class="spec">
+                                <span class="spec-icon">🔧</span>
+                                <div class="spec-text"><strong>${moto.torque}</strong>Torque</div>
+                            </div>
+                        </div>
+                        <div class="moto-rating-section">
+                            <div>
+                                <div class="stars">
+                                    ${generateStars(moto.rating)}
+                                </div>
+                                <span class="rating-count">${moto.reviews} avaliações</span>
+                            </div>
+                            <div style="text-align:right;">
+                                <span class="rating-number">${moto.rating}</span>
+                                <div class="moto-price">${moto.price} <small>*preço ref.</small></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Trigger animations
+            setTimeout(() => {
+                document.querySelectorAll('.motos-grid .fade-in').forEach((el, i) => {
+                    setTimeout(() => el.classList.add('visible'), i * 100);
+                });
+            }, 100);
+        }
+
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                stars += `<span class="star ${i <= Math.round(rating) ? 'filled' : 'empty'}">★</span>`;
+            }
+            return stars;
+        }
+
+        // ==================== FILTROS ====================
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderMotos(btn.dataset.filter);
+            });
+        });
+
+        // ==================== RANKING ====================
+        function renderRanking() {
+            const list = document.getElementById('rankingList');
+            const sorted = [...motos].sort((a, b) => b.rating - a.rating);
+
+            sorted.forEach((moto, index) => {
+                const posClass = index === 0 ? 'first' : index === 1 ? 'second' : index === 2 ? 'third' : '';
+                const percentage = (moto.rating / 5) * 100;
+
+                const item = document.createElement('div');
+                item.className = 'ranking-item fade-in';
+                item.innerHTML = `
+                    <span class="ranking-position ${posClass}">#${index + 1}</span>
+                    <span class="ranking-emoji">${moto.emoji}</span>
+                    <div class="ranking-info">
+                        <h4>${moto.brand} ${moto.name}</h4>
+                        <p>${moto.category.charAt(0).toUpperCase() + moto.category.slice(1)} • ${moto.engine} • ${moto.power}</p>
+                        <div class="ranking-bar">
+                            <div class="ranking-bar-fill" style="width: ${percentage}%"></div>
+                        </div>
+                    </div>
+                    <div class="ranking-score">
+                        <div class="score">${moto.rating}</div>
+                        <div class="label">/ 5.0</div>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        // ==================== COMPARAR ====================
+        function populateCompareSelects() {
+            const sel1 = document.getElementById('compare1');
+            const sel2 = document.getElementById('compare2');
+            const reviewSel = document.getElementById('reviewMoto');
+
+            motos.forEach(moto => {
+                const opt1 = new Option(`${moto.brand} ${moto.name}`, moto.id);
+                const opt2 = new Option(`${moto.brand} ${moto.name}`, moto.id);
+                const opt3 = new Option(`${moto.brand} ${moto.name}`, moto.id);
+                sel1.add(opt1);
+                sel2.add(opt2);
+                reviewSel.add(opt3);
+            });
+        }
+
+        function compareMotos() {
+            const id1 = parseInt(document.getElementById('compare1').value);
+            const id2 = parseInt(document.getElementById('compare2').value);
+
+            if (!id1 || !id2) {
+                alert('Selecione duas motos para comparar!');
+                return;
+            }
+
+            if (id1 === id2) {
+                alert('Selecione motos diferentes!');
+                return;
+            }
+
+            const m1 = motos.find(m => m.id === id1);
+            const m2 = motos.find(m => m.id === id2);
+
+            const specs = [
+                { label: 'Motor', v1: m1.engine, v2: m2.engine },
+                { label: 'Potência', v1: m1.power, v2: m2.power, higher: true },
+                { label: 'Peso', v1: m1.weight, v2: m2.weight, higher: false },
+                { label: 'Torque', v1: m1.torque, v2: m2.torque, higher: true },
+                { label: 'Avaliação', v1: m1.rating + ' ⭐', v2: m2.rating + ' ⭐', higher: true, numeric: true },
+                { label: 'Nº Avaliações', v1: m1.reviews, v2: m2.reviews, higher: true },
+                { label: 'Preço', v1: m1.price, v2: m2.price }
+            ];
+
+            let html = `
+                <table class="compare-table">
+                    <thead>
+                        <tr>
+                            <th>Especificação</th>
+                            <th>${m1.brand} ${m1.name}</th>
+                            <th>${m2.brand} ${m2.name}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            specs.forEach(spec => {
+                let c1 = '', c2 = '';
+                if (spec.higher) {
+                    const n1 = parseFloat(spec.v1);
+                    const n2 = parseFloat(spec.v2);
+                    if (n1 > n2) c1 = 'winner';
+                    if (n2 > n1) c2 = 'winner';
+                }
+
+                html += `
+                    <tr>
+                        <td style="color: var(--text-secondary); font-weight: 600;">${spec.label}</td>
+                        <td class="${c1}">${spec.v1}</td>
+                        <td class="${c2}">${spec.v2}</td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+
+            // Winner announcement
+            if (m1.rating > m2.rating) {
+                html += `<div style="text-align:center;margin-top:1.5rem;padding:1rem;background:rgba(0,230,118,0.1);border-radius:12px;border:1px solid rgba(0,230,118,0.3);">
+                    🏆 <strong style="color:var(--green);">${m1.brand} ${m1.name}</strong> vence com avaliação <strong>${m1.rating}</strong> vs <strong>${m2.rating}</strong>
+                </div>`;
+            } else if (m2.rating > m1.rating) {
+                html += `<div style="text-align:center;margin-top:1.5rem;padding:1rem;background:rgba(0,230,118,0.1);border-radius:12px;border:1px solid rgba(0,230,118,0.3);">
+                    🏆 <strong style="color:var(--green);">${m2.brand} ${m2.name}</strong> vence com avaliação <strong>${m2.rating}</strong> vs <strong>${m1.rating}</strong>
+                </div>`;
+            } else {
+                html += `<div style="text-align:center;margin-top:1.5rem;padding:1rem;background:rgba(255,215,0,0.1);border-radius:12px;border:1px solid rgba(255,215,0,0.3);">
+                    ⚡ Empate! Ambas têm avaliação <strong>${m1.rating}</strong>
+                </div>`;
+            }
+
+            document.getElementById('compareResult').innerHTML = html;
+        }
+
+        // ==================== MODAL ====================
+        function openModal(moto) {
+            document.getElementById('modalBrand').textContent = moto.brand;
+            document.getElementById('modalName').textContent = moto.name;
+            document.getElementById('modalDesc').textContent = moto.desc;
+
+            document.getElementById('modalSpecs').innerHTML = `
+                <div class="moto-specs">
+                    <div class="spec"><span class="spec-icon">⚙️</span><div class="spec-text"><strong>${moto.engine}</strong>Motor</div></div>
+                    <div class="spec"><span class="spec-icon">💨</span><div class="spec-text"><strong>${moto.power}</strong>Potência</div></div>
+                    <div class="spec"><span class="spec-icon">⚖️</span><div class="spec-text"><strong>${moto.weight}</strong>Peso</div></div>
+                    <div class="spec"><span class="spec-icon">🔧</span><div class="spec-text"><strong>${moto.torque}</strong>Torque</div></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border);">
+                    <div>
+                        <div class="stars" style="font-size:1.5rem;">${generateStars(moto.rating)}</div>
+                        <span style="color:var(--text-secondary);font-size:0.85rem;">${moto.reviews} avaliações</span>
+                    </div>
+                    <span class="moto-price" style="font-size:1.5rem;">${moto.price}</span>
+                </div>
+            `;
+
+            let reviewsHtml = '';
+            moto.userReviews.forEach(r => {
+                reviewsHtml += `
+                    <div style="background:var(--bg-dark);padding:1rem;border-radius:12px;margin-bottom:0.75rem;border:1px solid var(--border);">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+                            <strong style="font-size:0.9rem;">${r.name}</strong>
+                            <span style="color:var(--gold);">${'⭐'.repeat(r.rating)}</span>
+                        </div>
+                        <p style="color:var(--text-secondary);font-size:0.85rem;">${r.text}</p>
+                    </div>
+                `;
+            });
+            document.getElementById('modalReviews').innerHTML = reviewsHtml;
+
+            document.getElementById('motoModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('motoModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('motoModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('motoModal')) closeModal();
+        });
+
+        // ==================== STAR RATING INPUT ====================
+        let selectedRating = 0;
+        document.querySelectorAll('#starRating .star').forEach(star => {
+            star.addEventListener('click', () => {
+                selectedRating = parseInt(star.dataset.value);
+                document.getElementById('ratingValue').value = selectedRating;
+                document.querySelectorAll('#starRating .star').forEach((s, i) => {
+                    s.classList.toggle('filled', i < selectedRating);
+                    s.classList.toggle('empty', i >= selectedRating);
+                });
+            });
+
+            star.addEventListener('mouseenter', () => {
+                const hoverVal = parseInt(star.dataset.value);
+                document.querySelectorAll('#starRating .star').forEach((s, i) => {
+                    s.style.transform = i < hoverVal ? 'scale(1.2)' : 'scale(1)';
+                });
+            });
+
+            star.addEventListener('mouseleave', () => {
+                document.querySelectorAll('#starRating .star').forEach(s => {
+                    s.style.transform = 'scale(1)';
+                });
+            });
+        });
+
+        // ==================== SUBMIT REVIEW ====================
+        function submitReview(e) {
+            e.preventDefault();
+
+            const motoId = parseInt(document.getElementById('reviewMoto').value);
+            const name = document.getElementById('reviewName').value;
+            const rating = parseInt(document.getElementById('ratingValue').value);
+            const comment = document.getElementById('reviewComment').value;
+
+            if (!motoId || !name || !rating || !comment) {
+                alert('Preencha todos os campos!');
+                return;
+            }
+
+            const moto = motos.find(m => m.id === motoId);
+            moto.userReviews.push({ name, rating, text: comment });
+
+            // Recalculate average
+            const totalRating = moto.userReviews.reduce((sum, r) => sum + r.rating, 0);
+            moto.rating = parseFloat((totalRating / moto.userReviews.length).toFixed(1));
+            moto.reviews = moto.userReviews.length;
+
+            // Reset form
+            document.getElementById('reviewForm').reset();
+            selectedRating = 0;
+            document.querySelectorAll('#starRating .star').forEach(s => {
+                s.classList.remove('filled');
+                s.classList.add('empty');
+            });
+
+            // Show toast
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+
+            // Re-render
+            renderMotos(document.querySelector('.filter-btn.active').dataset.filter);
+            document.getElementById('rankingList').innerHTML = '';
+            renderRanking();
+        }
+
+        // ==================== SCROLL ANIMATIONS ====================
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ==================== INIT ====================
+        renderMotos();
+        renderRanking();
+        populateCompareSelects();
+
+        // Observe new fade-in elements after render
+        setTimeout(() => {
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+        }, 200);
+    </script>
+</body>
+</html>
