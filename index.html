@@ -313,14 +313,24 @@
 
         .moto-image {
             width: 100%;
-            height: 220px;
+            height: 240px;
             background: linear-gradient(135deg, #1a1a2e, #16213e);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
             position: relative;
             overflow: hidden;
+        }
+
+        .moto-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .moto-card:hover .moto-image img {
+            transform: scale(1.05);
         }
 
         .moto-image::after {
@@ -329,7 +339,7 @@
             bottom: 0;
             left: 0;
             right: 0;
-            height: 60px;
+            height: 80px;
             background: linear-gradient(transparent, var(--bg-card));
         }
 
@@ -339,15 +349,16 @@
             left: 1rem;
             background: var(--primary);
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             z-index: 2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
         .moto-rank.gold { background: linear-gradient(135deg, #ffd700, #ffaa00); color: #000; }
@@ -358,14 +369,16 @@
             position: absolute;
             top: 1rem;
             right: 1rem;
-            background: rgba(0,0,0,0.6);
+            background: rgba(255, 77, 0, 0.9);
             backdrop-filter: blur(10px);
             color: white;
-            padding: 0.3rem 0.8rem;
+            padding: 0.4rem 1rem;
             border-radius: 50px;
             font-size: 0.75rem;
-            font-weight: 600;
+            font-weight: 700;
             z-index: 2;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .moto-info {
@@ -381,7 +394,7 @@
         }
 
         .moto-name {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 800;
             margin: 0.3rem 0 0.8rem;
             letter-spacing: -0.5px;
@@ -401,7 +414,7 @@
         }
 
         .spec-icon {
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
         .spec-text {
@@ -561,7 +574,7 @@
             background: var(--bg-card);
             border-radius: 24px;
             padding: 3rem;
-            max-width: 550px;
+            max-width: 650px;
             width: 100%;
             border: 1px solid var(--border);
             position: relative;
@@ -586,7 +599,7 @@
         }
 
         .modal h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
             font-weight: 800;
             margin-bottom: 0.5rem;
         }
@@ -1032,7 +1045,7 @@
             </div>
             <div class="footer-col">
                 <h4>Contato</h4>
-                <a href="#">contoto@motorank.com.br</a>
+                <a href="#">contato@motorank.com.br</a>
                 <a href="#">Instagram</a>
                 <a href="#">YouTube</a>
                 <a href="#">Telegram</a>
@@ -1062,11 +1075,12 @@
     <div class="toast" id="toast">✅ Avaliação enviada com sucesso!</div>
 
     <script>
-        // ==================== DADOS DAS MOTOS ====================
+        // ==================== DADOS DAS MOTOS COM IMAGENS ====================
         const motos = [
             {
                 id: 1, name: "YZF-R3", brand: "Yamaha", category: "esportiva",
-                emoji: "🏍️", price: "R$ 29.990",
+                image: "https://images.unsplash.com/photo-1568772585407-93ed8b3e6174?w=800&q=80",
+                price: "R$ 29.990",
                 engine: "321cc", power: "42 cv", weight: "170 kg", torque: "29.6 Nm",
                 rating: 4.8, reviews: 342,
                 desc: "A Yamaha YZF-R3 é a esportiva de entrada perfeita. Com motor bicilíndrico de 321cc, oferece performance excepcional com conforto para o dia a dia.",
@@ -1077,7 +1091,8 @@
             },
             {
                 id: 2, name: "CB 500F", brand: "Honda", category: "naked",
-                emoji: "🔥", price: "R$ 37.900",
+                image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=800&q=80",
+                price: "R$ 37.900",
                 engine: "471cc", power: "50 cv", weight: "189 kg", torque: "43 Nm",
                 rating: 4.7, reviews: 489,
                 desc: "A Honda CB 500F é a naked versátil por excelência. Motor bicilíndrico confiável, ótimo para cidade e estrada.",
@@ -1088,7 +1103,8 @@
             },
             {
                 id: 3, name: "CBR 650R", brand: "Honda", category: "esportiva",
-                emoji: "⚡", price: "R$ 48.900",
+                image: "https://images.unsplash.com/photo-1449426468159-d96dbf08f19f?w=800&q=80",
+                price: "R$ 48.900",
                 engine: "649cc", power: "65 cv", weight: "202 kg", torque: "63 Nm",
                 rating: 4.9, reviews: 567,
                 desc: "A CBR 650R combina design inspirado na CBR1000RR com um motor de 4 cilindros suave e potente. A esportiva média definitiva.",
@@ -1099,7 +1115,8 @@
             },
             {
                 id: 4, name: "Teneré 700", brand: "Yamaha", category: "trail",
-                emoji: "🏔️", price: "R$ 54.990",
+                image: "https://images.unsplash.com/photo-1534153684925-6a272288ffbd?w=800&q=80",
+                price: "R$ 54.990",
                 engine: "689cc", power: "73 cv", weight: "205 kg", torque: "68 Nm",
                 rating: 4.9, reviews: 423,
                 desc: "A Teneré 700 é a trail adventure definitiva. Motor CP2 crossplane, suspensão de longo curso e capacidade off-road impressionante.",
@@ -1110,7 +1127,8 @@
             },
             {
                 id: 5, name: "MT-07", brand: "Yamaha", category: "naked",
-                emoji: "💀", price: "R$ 42.990",
+                image: "https://images.unsplash.com/photo-1479035915445-000e07e044b4?w=800&q=80",
+                price: "R$ 42.990",
                 engine: "689cc", power: "73 cv", weight: "184 kg", torque: "68 Nm",
                 rating: 4.8, reviews: 612,
                 desc: "A MT-07 é a naked mais popular do Brasil. Motor CP2 com torque brutal, chassi leve e design agressivo.",
@@ -1121,7 +1139,8 @@
             },
             {
                 id: 6, name: "Ninja 650", brand: "Kawasaki", category: "esportiva",
-                emoji: "🐉", price: "R$ 46.990",
+                image: "https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?w=800&q=80",
+                price: "R$ 46.990",
                 engine: "649cc", power: "68 cv", weight: "193 kg", torque: "64 Nm",
                 rating: 4.6, reviews: 378,
                 desc: "A Kawasaki Ninja 650 oferece o equilíbrio perfeito entre performance esportiva e conforto para o uso diário.",
@@ -1132,7 +1151,8 @@
             },
             {
                 id: 7, name: "XRE 300", brand: "Honda", category: "trail",
-                emoji: "🌿", price: "R$ 24.990",
+                image: "https://images.unsplash.com/photo-1622185135505-2d795043f9d6?w=800&q=80",
+                price: "R$ 24.990",
                 engine: "291cc", power: "26 cv", weight: "145 kg", torque: "27.5 Nm",
                 rating: 4.5, reviews: 891,
                 desc: "A XRE 300 é a trail mais vendida do Brasil. Versátil, econômica e perfeita para as estradas brasileiras.",
@@ -1143,7 +1163,8 @@
             },
             {
                 id: 8, name: "Vulcan S", brand: "Kawasaki", category: "custom",
-                emoji: "🤘", price: "R$ 44.990",
+                image: "https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?w=800&q=80",
+                price: "R$ 44.990",
                 engine: "649cc", power: "61 cv", weight: "228 kg", torque: "63 Nm",
                 rating: 4.6, reviews: 234,
                 desc: "A Vulcan S é a custom moderna com motor de 4 tempos. Ergonomia ergo-fit ajustável e estilo inconfundível.",
@@ -1154,7 +1175,8 @@
             },
             {
                 id: 9, name: "PCX 160", brand: "Honda", category: "scooter",
-                emoji: "🛵", price: "R$ 16.990",
+                image: "https://images.unsplash.com/photo-1558981806-ec527fa84c3d?w=800&q=80",
+                price: "R$ 16.990",
                 engine: "156cc", power: "16 cv", weight: "131 kg", torque: "15 Nm",
                 rating: 4.4, reviews: 756,
                 desc: "A PCX 160 é a scooter premium da Honda. Conforto, tecnologia e economia para a mobilidade urbana.",
@@ -1165,7 +1187,8 @@
             },
             {
                 id: 10, name: "Duke 390", brand: "KTM", category: "naked",
-                emoji: "🟠", price: "R$ 34.990",
+                image: "https://images.unsplash.com/photo-1568708554868-92943e248e67?w=800&q=80",
+                price: "R$ 34.990",
                 engine: "373cc", power: "44 cv", weight: "167 kg", torque: "37 Nm",
                 rating: 4.7, reviews: 345,
                 desc: "A KTM 390 Duke é a naked mais ágil da categoria. Motor monocilíndrico explosivo e chassi trellis de precisão.",
@@ -1176,7 +1199,8 @@
             },
             {
                 id: 11, name: "CB 1000R", brand: "Honda", category: "naked",
-                emoji: "👑", price: "R$ 74.900",
+                image: "https://images.unsplash.com/photo-1615174769180-1f909e5b5b9d?w=800&q=80",
+                price: "R$ 74.900",
                 engine: "998cc", power: "145 cv", weight: "213 kg", torque: "104 Nm",
                 rating: 4.9, reviews: 198,
                 desc: "A CB 1000R é a super naked da Honda. Motor da CBR1000RR em um pacote naked com eletrônica avançada.",
@@ -1187,7 +1211,8 @@
             },
             {
                 id: 12, name: "V-Strom 650", brand: "Suzuki", category: "trail",
-                emoji: "🗺️", price: "R$ 49.990",
+                image: "https://images.unsplash.com/photo-1469334031218-e382ef7111fd?w=800&q=80",
+                price: "R$ 49.990",
                 engine: "645cc", power: "71 cv", weight: "216 kg", torque: "62 Nm",
                 rating: 4.6, reviews: 287,
                 desc: "A Suzuki V-Strom 650 é a adventure mais confiável do mundo. Motor V-Twin suave e capacidade para qualquer aventura.",
@@ -1219,7 +1244,7 @@
                     <div class="moto-image">
                         <div class="moto-rank ${rankClass}">${index + 1}</div>
                         <div class="moto-category-tag">${moto.category.toUpperCase()}</div>
-                        <span style="font-size:5rem; z-index:1;">${moto.emoji}</span>
+                        <img src="${moto.image}" alt="${moto.brand} ${moto.name}" onerror="this.src='https://via.placeholder.com/800x600/1a1a2e/ff4d00?text=${moto.brand}+${moto.name}'">
                     </div>
                     <div class="moto-info">
                         <span class="moto-brand">${moto.brand}</span>
@@ -1297,7 +1322,7 @@
                 item.className = 'ranking-item fade-in';
                 item.innerHTML = `
                     <span class="ranking-position ${posClass}">#${index + 1}</span>
-                    <span class="ranking-emoji">${moto.emoji}</span>
+                    <span class="ranking-emoji">🏍️</span>
                     <div class="ranking-info">
                         <h4>${moto.brand} ${moto.name}</h4>
                         <p>${moto.category.charAt(0).toUpperCase() + moto.category.slice(1)} • ${moto.engine} • ${moto.power}</p>
